@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Tributária – Avançar Contadores – Setembro/2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cor-primaria: #1e40af;
+            --cor-primaria-clara: #3b82f6;
+            --cor-alerta: #f59e0b;
+            --cor-sucesso: #10b981;
+            --cor-fundo: #f8fafc;
+            --cor-texto: #1e293b;
+            --cor-cinza: #e2e8f0;
+            --sombra: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 25px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--sombra);
+        }
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--cor-primaria);
+            margin-bottom: 8px;
+        }
+        .subtitulo {
+            color: #64748b;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .btn-mensagem {
+            display: block;
+            width: 100%;
+            background: var(--cor-sucesso);
+            color: white;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin: 25px 0;
+            box-shadow: var(--sombra);
+            transition: all 0.2s;
+        }
+        .btn-mensagem:hover {
+            background: #0da271;
+            transform: translateY(-2px);
+        }
+        .btn-mensagem:active {
+            transform: translateY(0);
+        }
+        #painel-mensagem {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: var(--sombra);
+            margin: 20px 0;
+        }
+        .painel-titulo {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--cor-primaria);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .obrigacao {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--cor-cinza);
+        }
+        .obrigacao:last-child {
+            border-bottom: none;
+        }
+        .obrigacao input {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+        }
+        .obrigacao label {
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        textarea {
+            width: 100%;
+            min-height: 160px;
+            padding: 16px;
+            font-size: 1rem;
+            margin-top: 20px;
+            font-family: 'Inter', monospace;
+            border: 1px solid var(--cor-cinza);
+            border-radius: 12px;
+            resize: vertical;
+        }
+        .alerta {
+            background: #fffbeb;
+            border-left: 4px solid var(--cor-alerta);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+            box-shadow: var(--sombra);
+        }
+        .alerta h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #b45309;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+        .alerta ul {
+            padding-left: 20px;
+        }
+        .alerta li {
+            margin: 8px 0;
+            color: #92400e;
+        }
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+        }
+        th {
+            background: var(--cor-primaria);
+            color: white;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        tr:nth-child(even) {
+            background-color: #f1f5f9;
+        }
+        tr:hover {
+            background-color: #dbeafe;
+        }
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .tag-federal {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .tag-estadual {
+            background: #dcfce7;
+            color: #166534;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            color: #64748b;
+            font-size: 0.95rem;
+            border-top: 1px solid var(--cor-cinza);
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            header {
+                padding: 20px 0;
+            }
+            .logo {
+                font-size: 1.8rem;
+            }
+            th, td {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">📅 Agenda Tributária – Avançar Contadores</div>
+            <div class="subtitulo">Agenda de Setembro / 2025</div>
+        </header>
+
+        <button class="btn-mensagem" onclick="togglePainel()">💬 Gerar Mensagem Personalizada para Clientes</button>
+        
+        <div id="painel-mensagem">
+            <div class="painel-titulo">📝 Selecione os impostos e copie sua mensagem</div>
+            <div id="lista-obrigacoes"></div>
+            <textarea id="saida" placeholder="Sua mensagem personalizada aparecerá aqui. Clique nas opções acima para atualizar."></textarea>
+        </div>
+
+        <div class="alerta">
+            <h3>⚠️ Atenção – Datas em Finais de Semana ou Feriados</h3>
+            <p>As seguintes obrigações caem em dias não úteis. Confira no site oficial se houve alteração:</p>
+            <ul>
+                <li><strong>20/09/2025</strong> (sábado) → Simples Nacional</li>
+                <li><strong>20/09/2025</strong> (sábado) → DCTFWeb (IRRF/INSS)</li>
+                <li><strong>20/09/2025</strong> (sábado) → FGTS</li>
+                <li><strong>20/09/2025</strong> (sábado) → EDF-REF</li>
+            </ul>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Obrigação</th>
+                    <th>Fonte</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>09/09/2025</td>
+                    <td>ICMS ST - Convênio</td>
+                    <td><span class="tag tag-estadual">Estadual (CE)</span></td>
+                </tr>
+                <tr>
+                    <td>10/09/2025</td>
+                    <td>GIA ST</td>
+                    <td><span class="tag tag-estadual">Estadual (CE)</span></td>
+                </tr>
+                <tr>
+                    <td>15/09/2025</td>
+                    <td>ICMS Diferencial</td>
+                    <td><span class="tag tag-estadual">Estadual (CE)</span></td>
+                </tr>
+                <tr>
+                    <td>20/09/2025</td>
+                    <td>Simples Nacional</td>
+                    <td><span class="tag tag-federal">Federal</span></td>
+                </tr>
+                <tr>
+                    <td>20/09/2025</td>
+                    <td>DCTFWeb (IRRF/INSS)</td>
+                    <td><span class="tag tag-federal">Federal</span></td>
+                </tr>
+                <tr>
+                    <td>20/09/2025</td>
+                    <td>FGTS</td>
+                    <td><span class="tag tag-federal">Federal</span></td>
+                </tr>
+                <tr>
+                    <td>20/09/2025</td>
+                    <td>EDF-REF</td>
+                    <td><span class="tag tag-estadual">Estadual (CE)</span></td>
+                </tr>
+                <tr>
+                    <td>22/09/2025</td>
+                    <td>ICMS Normal (Varejo)</td>
+                    <td><span class="tag tag-estadual">Estadual (CE)</span></td>
+                </tr>
+                <tr>
+                    <td>22/09/2025</td>
+                    <td>PGDAS-D</td>
+                    <td><span class="tag tag-estadual">Estadual (CE)</span></td>
+                </tr>
+                <tr>
+                    <td>22/09/2025</td>
+                    <td>SITRAM</td>
+                    <td><span class="tag tag-estadual">Estadual (CE)</span></td>
+                </tr>
+                <tr>
+                    <td>25/09/2025</td>
+                    <td>PIS/COFINS</td>
+                    <td><span class="tag tag-federal">Federal</span></td>
+                </tr>
+                <tr>
+                    <td>30/09/2025</td>
+                    <td>IRPJ / CSLL</td>
+                    <td><span class="tag tag-federal">Federal</span></td>
+                </tr>
+                <tr>
+                    <td>30/09/2025</td>
+                    <td>Parcelamento REFIS (Federal)</td>
+                    <td><span class="tag tag-federal">Federal</span></td>
+                </tr>
+                <tr>
+                    <td>30/09/2025</td>
+                    <td>ICMS Combustíveis (Indústria)</td>
+                    <td><span class="tag tag-estadual">Estadual (CE)</span></td>
+                </tr>
+                <tr>
+                    <td>30/09/2025</td>
+                    <td>Parcelamento REFIS (SEFAZ)</td>
+                    <td><span class="tag tag-estadual">Estadual (CE)</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <footer>
+            <p>Atualizado em 25/09/2025 às 14:15 • Dados gerados com base em regras do escritório Avançar Contadores</p>
+        </footer>
+    </div>
+
+    <script>
+        const obrigacoes = [
+            {"data": "09/09/2025", "descricao": "ICMS ST - Convênio"},
+            {"data": "10/09/2025", "descricao": "GIA ST"},
+            {"data": "15/09/2025", "descricao": "ICMS Diferencial"},
+            {"data": "20/09/2025", "descricao": "Simples Nacional"},
+            {"data": "20/09/2025", "descricao": "DCTFWeb (IRRF/INSS)"},
+            {"data": "20/09/2025", "descricao": "FGTS"},
+            {"data": "20/09/2025", "descricao": "EDF-REF"},
+            {"data": "22/09/2025", "descricao": "ICMS Normal (Varejo)"},
+            {"data": "22/09/2025", "descricao": "PGDAS-D"},
+            {"data": "22/09/2025", "descricao": "SITRAM"},
+            {"data": "25/09/2025", "descricao": "PIS/COFINS"},
+            {"data": "30/09/2025", "descricao": "IRPJ / CSLL"},
+            {"data": "30/09/2025", "descricao": "Parcelamento REFIS (Federal)"},
+            {"data": "30/09/2025", "descricao": "ICMS Combustíveis (Indústria)"},
+            {"data": "30/09/2025", "descricao": "Parcelamento REFIS (SEFAZ)"}
+        ];
+
+        function togglePainel() {
+            const painel = document.getElementById('painel-mensagem');
+            painel.style.display = painel.style.display === 'block' ? 'none' : 'block';
+            if (painel.style.display === 'block' && !painel.innerHTML.includes('<div class="obrigacao">')) {
+                renderizarCheckboxes();
+            }
+        }
+
+        function renderizarCheckboxes() {
+            const container = document.getElementById('lista-obrigacoes');
+            container.innerHTML = '';
+            obrigacoes.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'obrigacao';
+                div.innerHTML = `
+                    <label>
+                        <input type="checkbox" data-index="${i}" checked> 
+                        ${item.descricao} – ${item.data}
+                    </label>
+                `;
+                container.appendChild(div);
+            });
+            gerarMensagem();
+        }
+
+        document.addEventListener('change', function(e) {
+            if (e.target.matches('input[type="checkbox"]')) {
+                gerarMensagem();
+            }
+        });
+
+        function gerarMensagem() {
+            const selecionados = [];
+            document.querySelectorAll('#lista-obrigacoes input:checked').forEach(el => {
+                const idx = parseInt(el.dataset.index);
+                selecionados.push(obrigacoes[idx]);
+            });
+
+            let texto = `Sua Agenda Tributária – Avançar Contadores\nNão esqueça do envio dos seus impostos. Os prazos são:\n\n`;
+            const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+            
+            selecionados.forEach(item => {
+                const [dia, mesNum] = item.data.split('/');
+                const mes = meses[parseInt(mesNum) - 1];
+                texto += `• ${item.descricao} – ${dia} de ${mes}\n`;
+            });
+
+            texto += `\nFaça o pagamento das guias antes dessas datas e conte conosco para evitar multas e atrasos.`;
+            document.getElementById('saida').value = texto.replace(/\\n/g, '\n');
+        }
+    </script>
+</body>
+</html>
