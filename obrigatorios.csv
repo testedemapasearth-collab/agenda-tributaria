@@ -1,0 +1,12 @@
+imposto,dia_fixo,fonte
+Simples Nacional,20,federal
+DCTFWeb (IRRF/INSS),20,federal
+FGTS,20,federal
+PIS/COFINS,25,federal
+ICMS ST - Convênio,9,estadual
+GIA ST,10,estadual
+ICMS Diferencial,15,estadual
+EDF-REF,20,estadual
+ICMS Normal (Varejo),22,estadual
+PGDAS-D,22,estadual
+SITRAM,22,estadual
