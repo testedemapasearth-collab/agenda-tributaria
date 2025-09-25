@@ -1,0 +1,4 @@
+cd C:\agenda-tributaria
+git add .
+git commit -m "Atualiza agenda para maio/2025"
+git push
