@@ -1,0 +1,37 @@
+name: Monitorar Mudanças nas Regras Tributárias
+
+on:
+  schedule:
+    # Roda todo dia 1º às 2h (horário UTC = 23h do dia 31 em Brasília ou 0h/01/XX no horário de verão)
+    - cron: "0 5 1 * *"
+  workflow_dispatch:  # Permite rodar manualmente
+
+jobs:
+  monitorar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: |
+          pip install -r requirements.txt
+
+      - name: Rodar monitoramento
+        run: |
+          python monitorar_mudancas.py
+
+      - name: Salvar logs e alertas (se existirem)
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add logs/ alertas/ || true
+          git diff --staged --quiet || git commit -m "Monitoramento: relatório de $(date +'%m/%Y')"
+          git push
